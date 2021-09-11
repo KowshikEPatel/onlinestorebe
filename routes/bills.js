@@ -30,7 +30,7 @@ router.put("/", async (req, res) => {
   } 
 });
 
-//DELETE Product
+//DELETE Bills
 router.delete("/:id", async (req, res) => {
 
   try {
@@ -42,7 +42,7 @@ router.delete("/:id", async (req, res) => {
   }  
 });
 
-//GET Product
+//GET Bills
 router.get("/:id", async (req, res) => {
 try {
   const bill = await Bill.findById(req.params.id);
@@ -51,5 +51,17 @@ try {
   res.status(500).json(err);
 }
 });
+
+//GET all Bills
+router.get("/user/:id", async(req,res)=>{
+
+  try {
+    const bill = await Bill.find({generatedBy:req.params.id});
+    res.status(200).json(bill);
+  } catch (err) {
+    console.log(err);
+    res.status(500).json(err);
+  }
+})
 
 module.exports = router;
